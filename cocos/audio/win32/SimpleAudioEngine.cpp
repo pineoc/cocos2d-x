@@ -78,13 +78,11 @@ void SimpleAudioEngine::end()
 {
     sharedMusic().Close();
 
-    EffectList::iterator p = sharedList().begin();
-    while (p != sharedList().end())
+    for (auto& iter : sharedList())
     {
-        delete p->second;
-        p->second = nullptr;
-        p++;
-    }   
+        delete iter.second;
+        iter.second = nullptr;
+    }
     sharedList().clear();
     return;
 }
@@ -173,7 +171,7 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
     int nRet = 0;
-    do 
+    do
     {
         BREAK_IF(! pszFilePath);
 
@@ -204,10 +202,9 @@ void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::pauseAllEffects()
 {
-    EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (auto& iter : sharedList())
     {
-        iter->second->Pause();
+        iter.second->Pause();
     }
 }
 
@@ -222,19 +219,17 @@ void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::resumeAllEffects()
 {
-    EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (auto& iter : sharedList())
     {
-        iter->second->Resume();
+        iter.second->Resume();
     }
 }
 
 void SimpleAudioEngine::stopAllEffects()
 {
-    EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (auto& iter : sharedList())
     {
-        iter->second->Stop();
+        iter.second->Stop();
     }
 }
 
@@ -253,7 +248,7 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
         delete p->second;
         p->second = nullptr;
         sharedList().erase(nID);
-    }    
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

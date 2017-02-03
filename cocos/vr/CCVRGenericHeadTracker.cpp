@@ -25,7 +25,7 @@
 
 // IMPORTANT
 // For iOS/Mac, this file is treated as an "Objective-C++" file.
-// To change this behvior, use the File Inspector from Xcode
+// To change this behaviour, use the File Inspector from Xcode
 
 #include "vr/CCVRGenericHeadTracker.h"
 
@@ -127,6 +127,8 @@ Vec3 lowPass(const Vec3& input, const Vec3& prev)
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
 static Mat4 getRotateEulerMatrix(float x, float y, float z)
 {
     x *= static_cast<float>(M_PI) / 180.0f;
@@ -159,6 +161,8 @@ static Mat4 getRotateEulerMatrix(float x, float y, float z)
     matrix.m[15] = 1.0f;
     return matrix;
 }
+
+#endif
 
 VRGenericHeadTracker::VRGenericHeadTracker()
 : _localPosition(Vec3::ZERO)
